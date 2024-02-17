@@ -24,7 +24,7 @@ const s3 = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: 'finaltp',
+    bucket: 'haeunboard',
     key(req, file, cb) {
       cb(null, `original/${Date.now()}_${file.originalname}`)
     }

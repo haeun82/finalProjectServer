@@ -35,7 +35,7 @@ const s3 = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: 'finaltp',
+    bucket: 'haeunboard',
     key(req, file, cb) {
       cb(null, `original/${Date.now()}_${file.originalname}`)
     }
@@ -236,7 +236,7 @@ router.post('/daily/insert', async (req, res) => {
       const deleteImgKey = imgKey.filter(key => !content.includes(key));
 
       deleteImgKey.forEach(image => {
-        const bucketParams = { Bucket: 'finaltp', Key: image };
+        const bucketParams = { Bucket: 'haeunboard', Key: image };
 
         const run = async () => {
           try {
@@ -300,7 +300,7 @@ router.delete('/daily/delete/:id', async (req, res) => {
     if (deleteImgKey) {
 
       deleteImgKey.forEach(image => {
-        const bucketParams = { Bucket: 'finaltp', Key: image };
+        const bucketParams = { Bucket: 'haeunboard', Key: image };
 
         const run = async () => {
           try {
@@ -357,7 +357,7 @@ router.patch('/daily/edit/:postId', async (req, res) => {
       const deleteImgKey = prevImages.filter(key => !imgKey.includes(key));
 
       deleteImgKey.forEach(image => {
-        const bucketParams = { Bucket: 'finaltp', Key: image };
+        const bucketParams = { Bucket: 'haeunboard', Key: image };
 
         const run = async () => {
           try {
@@ -528,7 +528,7 @@ router.patch('/daily/edit/:postId', upload.single('img'), async (req, res) => {
   const view = req.body.view;
 
   // aws에서 데이터 삭제
-  const bucketParams = { Bucket: 'finaltp', Key: thisPost.imgKey };
+  const bucketParams = { Bucket: 'haeunboard', Key: thisPost.imgKey };
   const run = async () => {
     try {
       const data = await s3.send(new DeleteObjectCommand(bucketParams))
@@ -554,7 +554,7 @@ router.patch('/daily/edit/:postId', upload.single('img'), async (req, res) => {
 //   const postId = req.params.postId;
 //   try {
 //     const thisPost = await db.collection('community').findOne({ _id: req.params.postId });
-//     const bucketParams = { Bucket: 'finaltp', Key: thisPost.imgKey };
+//     const bucketParams = { Bucket: 'haeunboard', Key: thisPost.imgKey };
 //     const run = async () => {
 //       try {
 //         const data = await s3.send(new DeleteObjectCommand(bucketParams))
@@ -727,7 +727,7 @@ router.patch('/toktok/edit/:postId', upload.single('img'), async (req, res) => {
   const imgKey = req.file?.key || '';
 
   // aws에서 데이터 육아톡톡
-  const bucketParams = { Bucket: 'finaltp', Key: thisPost.imgKey };
+  const bucketParams = { Bucket: 'haeunboard', Key: thisPost.imgKey };
   const run = async () => {
     try {
       const data = await s3.send(new DeleteObjectCommand(bucketParams))
@@ -754,7 +754,7 @@ router.delete('/toktok/delete/:postId', async (req, res) => {
   try {
     const postId = req.params.postId;
     // const thisPost = await db.collection('community').findOne({ _id: req.params.postId });   지민얘기
-    // const bucketParams = { Bucket: 'finaltp', Key: thisPost.imgKey };
+    // const bucketParams = { Bucket: 'haeunboard', Key: thisPost.imgKey };
     // const run = async () => {
     //   try {
     //     const data = await s3.send(new DeleteObjectCommand(bucketParams))
@@ -1012,8 +1012,8 @@ router.post('/daily/editShopItem/:itemId', upload.single('img'), async (req, res
   const imgKey = req.file?.key || '';
 
   // aws에서 데이터 삭제
-  // const bucketParams = { Bucket: 'finaltp', Key: 'original/1703139078070_feed_01.jpg' };
-  const bucketParams = { Bucket: 'finaltp', Key: thisItem.imgKey };
+  // const bucketParams = { Bucket: 'haeunboard', Key: 'original/1703139078070_feed_01.jpg' };
+  const bucketParams = { Bucket: 'haeunboard', Key: thisItem.imgKey };
   const run = async () => {
     try {
       const data = await s3.send(new DeleteObjectCommand(bucketParams))

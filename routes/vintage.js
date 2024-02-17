@@ -25,7 +25,7 @@ const s3 = new S3Client({
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: 'finaltp',
+    bucket: 'haeunboard',
     key(req, file, cb) {
       cb(null, `original/${Date.now()}_${file.originalname}`)
     }
@@ -193,7 +193,7 @@ router.post('/edit/:postId', upload.array('img'), async (req, res) => {
   const imgKey = req.files?.key || ''
 
   // aws에서 데이터 삭제
-  const bucketParams = { Bucket: 'finaltp', Key: thisPost.imgKey };
+  const bucketParams = { Bucket: 'haeunboard', Key: thisPost.imgKey };
   const run = async () => {
     try {
       const data = await s3.send(new DeleteObjectCommand(bucketParams))
