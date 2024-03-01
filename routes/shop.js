@@ -32,6 +32,45 @@ const upload = multer({
   limits: { fieldSize: 5 * 1024 * 1024 }
 });
 
+router.get('/write', async (req, res) => {
+  res.render('write');
+});
+
+router.post('/write', upload.single('img'), async (req, res, next) => {
+  console.log(req.file);
+  console.log(req.file?.location);
+
+  try {
+    const brand = req.body.brand;
+    const title = req.body.title;
+    const price = req.body.price;
+    const age = req.body.age;
+    const size = req.body.size;
+    const tag = req.body.brand;
+    const imgUrl = req.body.imgUrl
+
+    await db.collection('shop').insertOne({
+      brand,
+      title,
+      price,
+      age,
+      size,
+      tag,
+      imgUrl: req.file?.location || ''
+    });
+
+    res.json({
+      flag: true,
+      message: '등록 성공'
+    });
+  } catch (err) {
+    err.status = 500;
+    next(err);
+  }
+});
+
+
+
 
 // 상품정보 불러오기 (전체)(초기 8개, 더보기 시 8개 추가)
 router.get('/', async (req, res) => {

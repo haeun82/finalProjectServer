@@ -12,4 +12,8 @@ router.get('/', (req, res) => {
   res.render('write.ejs', { KAKAOKEY }); 
 });
 
+// router.get('/write', async (req, res) => {
+//   res.render('write');
+// });
+
 module.exports = router;

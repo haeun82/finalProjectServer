@@ -7,6 +7,8 @@ const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const api = require('./swagger/swagger')
+const MongoStore = require('connect-mongo');
+
 
 const app = express(); 
 // socket.io
@@ -52,7 +54,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(morgan('dev'));
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'views')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -65,7 +67,11 @@ app.use(session({
     httpOnly: false,
     secure: false,
   },
-  name: 'session-cookie'
+  name: 'session-cookie',
+  store:MongoStore.create({
+    mongoUrl: `mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PASSWORD}@cluster0.jgjmgj1.mongodb.net/`,
+    dbName: 'lastTeamProject'
+  }),
 }));
 
 // passport 미들웨어 설정

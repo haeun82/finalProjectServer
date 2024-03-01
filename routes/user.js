@@ -244,13 +244,13 @@ router.post('/login', (req, res, next) => {
 });
 
 
-// router.get('/loginUser', (req, res) => {
-//   res.json({
-//     flag: true,
-//     message: '유저정보 불러오기 성공',
-//     data: req.user
-//   })
-// })
+router.get('/loginUser', (req, res) => {
+  res.json({
+    flag: true,
+    message: '유저정보 불러오기 성공',
+    data: req.user
+  })
+})
 
 
 // 로그아웃
